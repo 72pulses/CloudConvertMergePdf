@@ -1,0 +1,20 @@
+PATH
+  remote: .
+  specs:
+    Cloud Convert Merge PDF (0.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    faraday (0.12.1)
+      multipart-post (>= 1.2, < 3)
+    json (2.1.0)
+    multipart-post (2.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  Cloud Convert Merge PDF!
+  faraday
+  json
