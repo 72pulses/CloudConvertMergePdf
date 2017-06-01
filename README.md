@@ -1,6 +1,6 @@
 # CloudConvertMergePDF
 
-CloudConvertMergePDF is a ruby wrapper for the [Cloud Convert](https://cloudconvert.com/) merge pdf api.
+CloudConvertMergePDF is a ruby wrapper for the [Cloud Convert](https://cloudconvert.com/api/combine) combine files to pdf API. The CloudConvert combine to pdf API merge files of any supported file type to a single PDF file.
 
 ## Installation
 
@@ -36,7 +36,7 @@ CloudConvertMergePdf::Merge.new(files, false).call
 
 ```ruby
 files = ['http://www.example.com/1.pdf', 'http://www.example.com/2.pdf']
-@client = CloudConvertMergePdf::Merge.new(files)
+merge_obj = CloudConvertMergePdf::Merge.new(files)
 out_file = @client.call # This will return a Tempfile object for the combined pdf
 out_file.unlink # Its a good apporach to unlink the tempfile than leaving it for the garbage collector
 ```

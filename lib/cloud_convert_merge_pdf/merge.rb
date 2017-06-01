@@ -11,17 +11,17 @@ module CloudConvertMergePdf
     attr_reader :download_url
 
     def initialize(files, download = true)
-      api_key = CloudConvertMergePdf.configuration.api_key
-      raise CloudConvertMergePdf::API_KEY_ERROR if api_key.nil?
-
       @connection = Faraday.new(
         url: CloudConvertMergePdf::CLOUD_CONVERT_ENDPOINT
       )
       @files = files
-      @download = download
+      @can_download = download
     end
 
     def call
+      api_key = CloudConvertMergePdf.configuration.api_key
+      return CloudConvertMergePdf::API_KEY_ERROR if api_key.nil?
+
       fetch_process_url
       process
 
@@ -46,11 +46,11 @@ module CloudConvertMergePdf
     end
 
     def download
-      return @download_url unless @download
-
       response = @connection.get @download_url
 
-      return response.body if response.status != 200
+      return parse_response(response.body) if response.status != 200
+
+      return clean_url(@download_url) unless @can_download
 
       combined_pdf(response.body)
     end
@@ -86,6 +86,12 @@ module CloudConvertMergePdf
       file.close
 
       file
+    end
+
+    def clean_url(url)
+      return '' if url.nil? || url.empty?
+
+      url.gsub(%r{^\/\/}, '')
     end
   end
 end
